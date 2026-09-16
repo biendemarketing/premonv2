@@ -8,6 +8,14 @@ import { ProjectsGallery } from '@/components/ProjectsGallery';
 export const metadata: Metadata = {
   title: 'Proyectos y Obras | PREMOM SRL - Punta Cana',
   description: 'Catálogo de obras y proyectos ejecutados por PREMOM SRL: estructuras metálicas para hoteles, naves logísticas, piping de vapor y agua helada en República Dominicana.',
+  alternates: {
+    canonical: 'https://premomdemo.vercel.app/proyectos',
+  },
+  openGraph: {
+    title: 'Obras y Proyectos Ejecutados | PREMOM SRL',
+    description: 'Catálogo fotográfico y técnico de proyectos industriales y hoteleros desarrollados por PREMOM SRL en Punta Cana.',
+    url: 'https://premomdemo.vercel.app/proyectos',
+  },
 };
 
 export default function ProyectosPage() {

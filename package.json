@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "convert:webp": "node scripts/convert-to-webp.mjs",
+    "generate:og": "node scripts/generate-og-image.mjs",
     "clean": "next clean"
   },
   "dependencies": {

@@ -20,6 +20,14 @@ import {
 export const metadata: Metadata = {
   title: 'Servicios | PREMOM SRL - Estructuras, Tuberías y Soldadura',
   description: 'Catálogo de servicios de PREMOM SRL: fabricación de estructuras metálicas, piping industrial de vapor y agua helada, soldadura certificada AWS/ASME y barandillas de acero inoxidable.',
+  alternates: {
+    canonical: 'https://premomdemo.vercel.app/servicios',
+  },
+  openGraph: {
+    title: 'Servicios Metalmecánicos y Piping | PREMOM SRL',
+    description: 'Catálogo de servicios industriales de PREMOM SRL en Punta Cana: estructuras de acero, tuberías industriales y soldadura certificada.',
+    url: 'https://premomdemo.vercel.app/servicios',
+  },
 };
 
 export default function ServiciosPage() {

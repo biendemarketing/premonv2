@@ -21,6 +21,14 @@ import {
 export const metadata: Metadata = {
   title: 'Nosotros | PREMOM SRL - Misión, Visión y Valores',
   description: 'Conozca la historia, misión, visión y valores de PREMOM SRL. Empresa líder en fabricación de estructuras metálicas, piping y soldadura en Punta Cana, República Dominicana.',
+  alternates: {
+    canonical: 'https://premomdemo.vercel.app/nosotros',
+  },
+  openGraph: {
+    title: 'Quiénes Somos | PREMOM SRL',
+    description: 'Empresa líder en fabricación de estructuras metálicas, piping y soldadura en Punta Cana, República Dominicana.',
+    url: 'https://premomdemo.vercel.app/nosotros',
+  },
 };
 
 export default function NosotrosPage() {
