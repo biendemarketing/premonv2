@@ -59,13 +59,10 @@ async function generateOG() {
       <text x="600" y="106" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#a3e635" text-anchor="middle" letter-spacing="3.5">INGENIERÍA &amp; MONTAJE INDUSTRIAL</text>
 
       <!-- Subtitle below logo -->
-      <text x="600" y="410" font-family="system-ui, -apple-system, sans-serif" font-size="17" font-weight="500" fill="#ffffff" text-anchor="middle" letter-spacing="2">ESTRUCTURAS METÁLICAS • PIPING • SOLDADURA AWS/ASME</text>
+      <text x="600" y="405" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="500" fill="#ffffff" text-anchor="middle" letter-spacing="2">ESTRUCTURAS METÁLICAS • PIPING • SOLDADURA AWS/ASME</text>
 
-      <!-- Location and domain footer -->
-      <text x="600" y="450" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="400" fill="#a1a1aa" text-anchor="middle" letter-spacing="1.5">PUNTA CANA – BÁVARO • REPÚBLICA DOMINICANA</text>
-      
-      <!-- Domain badge -->
-      <text x="600" y="535" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#84cc16" text-anchor="middle" letter-spacing="1">premomdemo.vercel.app</text>
+      <!-- Location footer -->
+      <text x="600" y="455" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#a1a1aa" text-anchor="middle" letter-spacing="2.5">PUNTA CANA – BÁVARO • REPÚBLICA DOMINICANA</text>
     </svg>
   `);
 
