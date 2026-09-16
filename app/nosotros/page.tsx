@@ -223,20 +223,20 @@ export default function NosotrosPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 xl:gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 xl:gap-8">
               {values.map((v, idx) => (
                 <div
                   key={idx}
-                  className="bg-slate-50 p-8 transition-colors flex flex-col items-center text-center hover:bg-slate-100"
+                  className="bg-slate-50 p-3.5 sm:p-6 lg:p-8 transition-colors flex flex-col items-center text-center hover:bg-slate-100"
                 >
                   <div className="w-full flex flex-col items-center">
-                    <div className="mb-5 text-lime-700 p-3 bg-lime-50 rounded-full flex items-center justify-center">
+                    <div className="mb-3 sm:mb-5 text-lime-700 p-2 sm:p-3 bg-lime-50 rounded-full flex items-center justify-center [&>svg]:w-7 [&>svg]:h-7 sm:[&>svg]:w-9 sm:[&>svg]:h-9 lg:[&>svg]:w-12 lg:[&>svg]:h-12">
                       {v.icon}
                     </div>
-                    <h3 className="text-lg font-bold text-slate-900 mb-2">
+                    <h3 className="text-xs sm:text-base lg:text-lg font-bold text-slate-900 mb-1 sm:mb-2 leading-snug">
                       {v.title}
                     </h3>
-                    <p className="text-sm text-slate-600 leading-relaxed">
+                    <p className="text-[11px] sm:text-xs lg:text-sm text-slate-600 leading-relaxed font-normal">
                       {v.description}
                     </p>
                   </div>

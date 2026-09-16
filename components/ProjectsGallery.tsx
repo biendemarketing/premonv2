@@ -298,13 +298,13 @@ export function ProjectsGallery() {
         </div>
 
         {/* ========================================================================= */}
-        {/* DESKTOP ACCORDION LAYOUT: Sin trazos en cards, sin bordes en botones,      */}
-        {/* sin tonelada, rotación automática tipo slider                              */}
+        {/* DESKTOP ACCORDION LAYOUT: Card principal con proporción 16:9              */}
+        {/* sin trazos en cards, sin bordes en botones, rotación automática slider    */}
         {/* ========================================================================= */}
         <div 
           onMouseEnter={() => setIsAutoPlaying(false)}
           onMouseLeave={() => setIsAutoPlaying(true)}
-          className="hidden lg:flex flex-row gap-2.5 w-full min-h-[580px] xl:min-h-[620px] items-stretch"
+          className="hidden lg:flex flex-row gap-2.5 w-full items-stretch"
         >
           
           {/* Loop over filtered projects */}
@@ -318,7 +318,7 @@ export function ProjectsGallery() {
                   layout
                   transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                   onClick={() => setActiveProjectModal(project)}
-                  className="flex-[8] relative overflow-hidden bg-slate-950 flex flex-col justify-between p-7 sm:p-9 xl:p-10 shadow-lg cursor-pointer group"
+                  className="flex-1 aspect-[16/9] min-w-0 relative overflow-hidden bg-slate-950 flex flex-col justify-between p-7 sm:p-9 xl:p-10 shadow-lg cursor-pointer group"
                 >
                   {/* Real Project Image Background */}
                   <Image
@@ -400,51 +400,73 @@ export function ProjectsGallery() {
 
         {/* ========================================================================= */}
         {/* MOBILE & TABLET VIEW: Featured Active Card + Horizontal Selector Strips   */}
-        {/* (Sin trazos y con slider automático)                                      */}
+        {/* Imagen en proporción 16:9 ocupando el ancho completo y datos debajo       */}
         {/* ========================================================================= */}
         <div 
           onMouseEnter={() => setIsAutoPlaying(false)}
           onMouseLeave={() => setIsAutoPlaying(true)}
           className="lg:hidden flex flex-col gap-5 w-full"
         >
-          {/* Active Featured Card: degradado solo abajo, solo título abajo, flecha grande arriba a la derecha, card completa clicable */}
+          {/* Active Featured Card: Imagen en proporción 16:9 y texto debajo sin tapar la foto */}
           <div 
             onClick={() => setActiveProjectModal(currentSelectedProject)}
-            className="relative overflow-hidden bg-slate-950 flex flex-col justify-between p-6 sm:p-8 min-h-[460px] cursor-pointer group shadow-lg"
+            className="overflow-hidden bg-slate-900 cursor-pointer group shadow-lg flex flex-col"
           >
-            <Image
-              src={currentSelectedProject.imageUrl}
-              alt={currentSelectedProject.title}
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 800px"
-              className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
-              referrerPolicy="no-referrer"
-            />
-            
-            {/* Degradado overlay solo en la parte inferior */}
-            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent pointer-events-none" />
+            {/* Imagen en proporción exacta (16:9) que ocupa todo el ancho disponible */}
+            <div className="relative w-full aspect-[16/9] overflow-hidden bg-slate-950">
+              <Image
+                src={currentSelectedProject.imageUrl}
+                alt={currentSelectedProject.title}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 800px"
+                className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                referrerPolicy="no-referrer"
+              />
+              
+              {/* Badge de categoría sobre la imagen */}
+              <div className="absolute top-3 left-3 px-2.5 py-1 bg-lime-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-sm">
+                {currentSelectedProject.categoryLabel}
+              </div>
 
-            {/* Flecha grande en la esquina superior derecha para ir al proyecto */}
-            <div className="relative z-10 flex justify-end">
-              <div 
-                className="p-2.5 bg-slate-950/60 hover:bg-lime-500 text-white hover:text-slate-950 transition-all shadow-md group-hover:bg-lime-500 group-hover:text-slate-950"
-                title="Ver proyecto"
-                aria-label="Ver proyecto"
-              >
-                <ArrowUpRight className="w-8 h-8 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+              {/* Botón ver detalles en la esquina superior derecha */}
+              <div className="absolute top-3 right-3 p-2 bg-slate-950/70 text-white group-hover:bg-lime-500 group-hover:text-slate-950 transition-colors shadow-sm">
+                <ArrowUpRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </div>
             </div>
 
-            {/* Información: solo el título en la parte inferior sobre el degradado */}
-            <div className="relative z-10 mt-auto pt-16">
-              <h3 className="text-xl sm:text-2xl font-normal text-white uppercase tracking-tight leading-tight drop-shadow-md">
+            {/* Información del proyecto: DEBAJO de la imagen, completamente visible */}
+            <div className="p-5 sm:p-6 bg-slate-900 space-y-2.5">
+              <div className="flex items-center justify-between text-xs text-slate-400">
+                <span>{currentSelectedProject.location}</span>
+                <span className="text-lime-400 font-bold">Obra {currentSelectedProject.code}</span>
+              </div>
+
+              <h3 className="text-lg sm:text-xl font-normal text-white uppercase tracking-tight leading-snug group-hover:text-lime-400 transition-colors">
                 {currentSelectedProject.title}
               </h3>
+
+              <p className="text-xs sm:text-sm text-slate-300 line-clamp-2 leading-relaxed font-normal">
+                {currentSelectedProject.description}
+              </p>
+
+              <div className="flex items-center justify-between pt-2 border-t border-slate-800">
+                <div className="flex flex-wrap gap-1.5">
+                  {currentSelectedProject.tags.slice(0, 2).map((t, idx) => (
+                    <span key={idx} className="text-[10px] px-2 py-0.5 bg-slate-800 text-slate-300">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                <span className="text-xs font-bold uppercase tracking-wider text-lime-400 inline-flex items-center gap-1">
+                  <span>Ver Ficha Técnica</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* Horizontal Selector of Other Projects (Sin trazo) */}
+          {/* Horizontal Selector of Other Projects con miniaturas proporcionales */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
             {filteredProjects.map((p) => {
               const isSelected = p.id === currentSelectedProject.id;
@@ -452,18 +474,30 @@ export function ProjectsGallery() {
                 <button
                   key={p.id}
                   onClick={() => setSelectedId(p.id)}
-                  className={`flex items-center gap-2.5 px-4 py-3 shrink-0 text-left transition-colors ${
+                  className={`flex items-center gap-2.5 p-2 pr-3 shrink-0 text-left transition-colors ${
                     isSelected
                       ? 'bg-lime-600 text-white'
                       : 'bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800'
                   }`}
                 >
-                  <span className="w-6 h-6 flex items-center justify-center bg-black/40 text-xs font-medium">
-                    {p.code}
-                  </span>
-                  <span className="text-xs uppercase tracking-wider font-normal whitespace-nowrap">
-                    {p.shortTitle}
-                  </span>
+                  <div className="relative w-12 aspect-[16/9] overflow-hidden bg-black/40 shrink-0">
+                    <Image
+                      src={p.imageUrl}
+                      alt={p.shortTitle}
+                      fill
+                      sizes="48px"
+                      className="object-cover"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[10px] block opacity-75 font-mono">
+                      {p.code}
+                    </span>
+                    <span className="text-xs uppercase tracking-wider font-normal whitespace-nowrap block truncate max-w-[140px]">
+                      {p.shortTitle}
+                    </span>
+                  </div>
                 </button>
               );
             })}

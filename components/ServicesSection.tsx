@@ -165,8 +165,8 @@ export function ServicesSection({ onSelectServiceForQuote }: ServicesSectionProp
           </motion.p>
         </motion.div>
 
-        {/* Minimalist Services Grid: Big Green Icons, Expanding Full Width */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 xl:gap-8 w-full">
+        {/* Minimalist Services Grid: 2 Columns on Mobile, 4 Columns on Desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 xl:gap-8 w-full">
           {services.map((service, index) => (
             <motion.div
               key={service.id}
@@ -176,26 +176,27 @@ export function ServicesSection({ onSelectServiceForQuote }: ServicesSectionProp
               transition={{ duration: 0.5, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
               onClick={() => handleSelectService(service)}
               id={`service-card-${service.id}`}
-              className="bg-slate-50 hover:bg-slate-100 p-8 flex flex-col justify-between transition-all duration-200 cursor-pointer group text-center"
+              className="bg-slate-50 hover:bg-slate-100 p-3.5 sm:p-6 lg:p-8 flex flex-col justify-between transition-all duration-200 cursor-pointer group text-center"
             >
               <div>
-                <div className="relative flex items-center justify-center mb-6">
-                  <div className="shrink-0 text-lime-700 p-3 bg-lime-50 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                <div className="relative flex items-center justify-center mb-3 sm:mb-6">
+                  <div className="shrink-0 text-lime-700 p-2 sm:p-3 bg-lime-50 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-105 [&>svg]:w-7 [&>svg]:h-7 sm:[&>svg]:w-10 sm:[&>svg]:h-10 lg:[&>svg]:w-12 lg:[&>svg]:h-12">
                     {service.icon}
                   </div>
-                  <span className="absolute right-0 top-0 text-xs font-normal text-slate-400 group-hover:text-lime-700 transition-colors">
+                  <span className="absolute right-0 top-0 text-[10px] sm:text-xs font-normal text-slate-400 group-hover:text-lime-700 transition-colors">
                     0{index + 1}
                   </span>
                 </div>
 
-                <h3 className="text-xl font-bold text-slate-900 group-hover:text-lime-800 transition-colors leading-snug">
+                <h3 className="text-xs sm:text-lg lg:text-xl font-bold text-slate-900 group-hover:text-lime-800 transition-colors leading-snug">
                   {service.title}
                 </h3>
               </div>
 
-              <div className="mt-8 pt-4 flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-600 group-hover:text-lime-800">
-                <span>Ver especificaciones</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <div className="mt-4 sm:mt-8 pt-2 sm:pt-4 flex items-center justify-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-600 group-hover:text-lime-800">
+                <span className="hidden sm:inline">Ver especificaciones</span>
+                <span className="sm:hidden">Ver detalles</span>
+                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform shrink-0" />
               </div>
             </motion.div>
           ))}

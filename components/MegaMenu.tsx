@@ -378,18 +378,18 @@ export function MegaMenu({
                   </Link>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2.5">
                   <Link
                     href="/servicios#estructuras-metalicas"
                     onClick={onClose}
-                    className="p-3 bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-all group"
+                    className="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-all group"
                   >
                     <div className="flex items-center gap-2.5">
                       <div className="p-2 bg-white text-lime-700 shadow-sm shrink-0">
                         <Building2 className="w-4 h-4" />
                       </div>
-                      <div>
-                        <div className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors">
+                      <div className="min-w-0">
+                        <div className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors truncate">
                           Estructuras Metálicas Pesadas
                         </div>
                         <div className="text-[11px] text-slate-500 line-clamp-1">
@@ -402,14 +402,14 @@ export function MegaMenu({
                   <Link
                     href="/servicios#montaje-tuberias"
                     onClick={onClose}
-                    className="p-3 bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-all group"
+                    className="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-all group"
                   >
                     <div className="flex items-center gap-2.5">
                       <div className="p-2 bg-white text-lime-700 shadow-sm shrink-0">
                         <Layers className="w-4 h-4" />
                       </div>
-                      <div>
-                        <div className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors">
+                      <div className="min-w-0">
+                        <div className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors truncate">
                           Tuberías Industriales (Piping)
                         </div>
                         <div className="text-[11px] text-slate-500 line-clamp-1">
@@ -422,14 +422,14 @@ export function MegaMenu({
                   <Link
                     href="/servicios#barandillas-inoxidable"
                     onClick={onClose}
-                    className="p-3 bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-all group"
+                    className="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-all group"
                   >
                     <div className="flex items-center gap-2.5">
                       <div className="p-2 bg-white text-lime-700 shadow-sm shrink-0">
                         <CheckCircle className="w-4 h-4" />
                       </div>
-                      <div>
-                        <div className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors">
+                      <div className="min-w-0">
+                        <div className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors truncate">
                           Barandillas en Acero Inoxidable
                         </div>
                         <div className="text-[11px] text-slate-500 line-clamp-1">
@@ -442,14 +442,14 @@ export function MegaMenu({
                   <Link
                     href="/servicios#soldaduras-general"
                     onClick={onClose}
-                    className="p-3 bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-all group"
+                    className="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-all group"
                   >
                     <div className="flex items-center gap-2.5">
                       <div className="p-2 bg-white text-lime-700 shadow-sm shrink-0">
                         <Flame className="w-4 h-4" />
                       </div>
-                      <div>
-                        <div className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors">
+                      <div className="min-w-0">
+                        <div className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors truncate">
                           Soldaduras Especializadas
                         </div>
                         <div className="text-[11px] text-slate-500 line-clamp-1">
@@ -462,14 +462,14 @@ export function MegaMenu({
                   <Link
                     href="/servicios#mantenimiento-reparacion"
                     onClick={onClose}
-                    className="p-3 bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-all group"
+                    className="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-all group"
                   >
                     <div className="flex items-center gap-2.5">
                       <div className="p-2 bg-white text-lime-700 shadow-sm shrink-0">
                         <Wrench className="w-4 h-4" />
                       </div>
-                      <div>
-                        <div className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors">
+                      <div className="min-w-0">
+                        <div className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors truncate">
                           Mantenimiento y Refuerzos
                         </div>
                         <div className="text-[11px] text-slate-500 line-clamp-1">
@@ -482,18 +482,58 @@ export function MegaMenu({
                   <Link
                     href="/servicios#trabajos-medida"
                     onClick={onClose}
-                    className="p-3 bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-all group"
+                    className="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-all group"
                   >
                     <div className="flex items-center gap-2.5">
                       <div className="p-2 bg-white text-lime-700 shadow-sm shrink-0">
                         <Compass className="w-4 h-4" />
                       </div>
-                      <div>
-                        <div className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors">
+                      <div className="min-w-0">
+                        <div className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors truncate">
                           Trabajos Arquitectónicos a Medida
                         </div>
                         <div className="text-[11px] text-slate-500 line-clamp-1">
                           Cenadores piramidales, pérgolas y cubiertas singulares
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/servicios#soluciones-integrales"
+                    onClick={onClose}
+                    className="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-all group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="p-2 bg-white text-lime-700 shadow-sm shrink-0">
+                        <Briefcase className="w-4 h-4" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors truncate">
+                          Soluciones Integrales
+                        </div>
+                        <div className="text-[11px] text-slate-500 line-clamp-1">
+                          Gestión completa llave en mano con grúas de izaje
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/servicios#asesoramiento-tecnico"
+                    onClick={onClose}
+                    className="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-all group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="p-2 bg-white text-lime-700 shadow-sm shrink-0">
+                        <Clock className="w-4 h-4" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors truncate">
+                          Asesoramiento y Plazos
+                        </div>
+                        <div className="text-[11px] text-slate-500 line-clamp-1">
+                          Optimización de planos y garantía contractual de entrega
                         </div>
                       </div>
                     </div>

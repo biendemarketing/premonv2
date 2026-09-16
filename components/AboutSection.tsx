@@ -191,7 +191,7 @@ export function AboutSection() {
             </h3>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {values.map((v, idx) => (
               <motion.div
                 key={idx}
@@ -199,16 +199,16 @@ export function AboutSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="bg-slate-50 p-6 sm:p-8 flex flex-col justify-between transition-colors hover:bg-slate-100"
+                className="bg-slate-50 p-3.5 sm:p-6 lg:p-8 flex flex-col justify-between transition-colors hover:bg-slate-100 text-center sm:text-left"
               >
                 <div>
-                  <div className="mb-5">
+                  <div className="mb-3 sm:mb-5 flex justify-center sm:justify-start [&>svg]:w-7 [&>svg]:h-7 sm:[&>svg]:w-10 sm:[&>svg]:h-10 lg:[&>svg]:w-12 lg:[&>svg]:h-12">
                     {v.icon}
                   </div>
-                  <h4 className="text-base sm:text-lg font-bold text-slate-900 mb-2">
+                  <h4 className="text-xs sm:text-base lg:text-lg font-bold text-slate-900 mb-1 sm:mb-2 leading-snug">
                     {v.title}
                   </h4>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  <p className="text-[11px] sm:text-xs lg:text-sm text-slate-600 leading-relaxed font-normal">
                     {v.description}
                   </p>
                 </div>

@@ -137,7 +137,8 @@ export default function ServiciosPage() {
               {services.map((s, idx) => (
                 <div
                   key={s.id}
-                  className="bg-slate-50 p-8 sm:p-10 flex flex-col justify-between transition-colors hover:bg-slate-100"
+                  id={s.id}
+                  className="scroll-mt-32 bg-slate-50 p-8 sm:p-10 flex flex-col justify-between transition-colors hover:bg-slate-100"
                 >
                   <div>
                     <div className="flex items-start justify-between mb-6">
