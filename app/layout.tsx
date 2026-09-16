@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import { Plus_Jakarta_Sans, Inter } from 'next/font/google';
 import './globals.css';
+import { SmoothScrollProvider } from '@/components/SmoothScrollProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -138,7 +139,7 @@ const jsonLd = {
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
-    <html lang="es" className={`${inter.variable} ${plusJakarta.variable} scroll-smooth`}>
+    <html lang="es" className={`${inter.variable} ${plusJakarta.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -146,7 +147,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         />
       </head>
       <body suppressHydrationWarning className="bg-white text-slate-800 font-sans font-normal antialiased selection:bg-lime-500 selection:text-white">
-        {children}
+        <SmoothScrollProvider>
+          {children}
+        </SmoothScrollProvider>
       </body>
     </html>
   );
