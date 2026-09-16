@@ -1,11 +1,24 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { ArrowUp, X } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 
 export function FloatingWhatsApp() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Visible solo cuando el usuario baja más de 300px desde el inicio
+      setShowScrollTop(window.scrollY > 300);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -42,23 +55,33 @@ export function FloatingWhatsApp() {
         </div>
       )}
 
-      {/* Botón flotante Volver Arriba (Solo el icono de la flecha arriba, mismo tamaño que WhatsApp) */}
-      <div className="relative group">
-        <button
-          type="button"
-          onClick={scrollToTop}
-          className="w-11 h-11 rounded-full bg-slate-900 hover:bg-slate-800 text-white hover:text-lime-400 border border-slate-700/80 shadow-lg flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-95 cursor-pointer"
-          aria-label="Volver arriba"
-          id="floating-scroll-top-btn"
-        >
-          <ArrowUp className="w-5 h-5" />
-        </button>
+      {/* Botón flotante Volver Arriba: visible solo cuando el usuario baja en la página */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 10 }}
+            transition={{ duration: 0.2 }}
+            className="relative group"
+          >
+            <button
+              type="button"
+              onClick={scrollToTop}
+              className="w-11 h-11 rounded-full bg-slate-900 hover:bg-slate-800 text-white hover:text-lime-400 border border-slate-700/80 shadow-lg flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-95 cursor-pointer"
+              aria-label="Volver arriba"
+              id="floating-scroll-top-btn"
+            >
+              <ArrowUp className="w-5 h-5" />
+            </button>
 
-        {/* Hover tooltip label */}
-        <div className="absolute right-14 top-1/2 -translate-y-1/2 hidden md:group-hover:flex items-center bg-slate-900 text-white px-2.5 py-1 text-xs font-semibold whitespace-nowrap shadow-md border border-slate-700/60 rounded pointer-events-none">
-          Volver arriba
-        </div>
-      </div>
+            {/* Hover tooltip label */}
+            <div className="absolute right-14 top-1/2 -translate-y-1/2 hidden md:group-hover:flex items-center bg-slate-900 text-white px-2.5 py-1 text-xs font-semibold whitespace-nowrap shadow-md border border-slate-700/60 rounded pointer-events-none">
+              Volver arriba
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Botón flotante Oficial de WhatsApp (Más pequeño, mismo tamaño que el botón de volver arriba) */}
       <div className="relative group">

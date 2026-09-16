@@ -20,6 +20,71 @@ interface Slide {
   title: string;
 }
 
+interface HeroCharacterBlurProps {
+  text: string;
+  className?: string;
+  delay?: number;
+}
+
+/**
+ * Anima las letras individualmente con efecto óptico de desenfoque de aparición (blur-in)
+ * y desplazamiento suave, manteniendo las palabras agrupadas para evitar cortes indeseados.
+ */
+function HeroCharacterBlur({ text, className = '', delay = 0.1 }: HeroCharacterBlurProps) {
+  const words = text.split(' ');
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.028,
+        delayChildren: delay,
+      },
+    },
+  };
+
+  const charVariants = {
+    hidden: {
+      opacity: 0,
+      y: 16,
+      filter: 'blur(12px)',
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      transition: {
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1] as const,
+      },
+    },
+  };
+
+  return (
+    <motion.span
+      className={`inline-block ${className}`}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {words.map((word, wordIndex) => (
+        <span key={wordIndex} className="inline-block whitespace-nowrap mr-[0.25em] last:mr-0">
+          {Array.from(word).map((char, charIndex) => (
+            <motion.span
+              key={charIndex}
+              variants={charVariants}
+              className="inline-block will-change-[filter,opacity,transform]"
+            >
+              {char}
+            </motion.span>
+          ))}
+        </span>
+      ))}
+    </motion.span>
+  );
+}
+
 export function Hero() {
   const slides: Slide[] = [
     {
@@ -166,20 +231,35 @@ export function Hero() {
 
         {/* Título, descripción y botones DEBAJO de la imagen (no encima) */}
         <div className="w-full px-4 sm:px-8 py-8 sm:py-10 bg-slate-950 flex flex-col">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-lime-400 block mb-2">
+          <motion.span 
+            initial={{ opacity: 0, filter: 'blur(6px)', y: -6 }}
+            animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+            transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            className="text-[11px] font-bold uppercase tracking-wider text-lime-400 block mb-2"
+          >
             PREMOM SRL • Punta Cana
-          </span>
+          </motion.span>
 
           <h1 className="text-2xl sm:text-3xl font-normal tracking-tight text-white uppercase leading-tight">
-            Tuberías y Estructuras Metálicas
+            <HeroCharacterBlur text="Tuberías y Estructuras Metálicas" delay={0.15} />
           </h1>
 
-          <p className="mt-3 sm:mt-4 text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+          <motion.p 
+            initial={{ opacity: 0, y: 15, filter: 'blur(8px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 0.65, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-3 sm:mt-4 text-sm sm:text-base text-slate-300 leading-relaxed font-normal"
+          >
             Fabricación en taller propio, montaje en obra con grúas telescópicas y soldadura certificada para proyectos hoteleros, comerciales e industriales en Punta Cana y toda la República Dominicana.
-          </p>
+          </motion.p>
 
           {/* Botones debajo de la imagen y el texto */}
-          <div className="mt-6 flex flex-col sm:flex-row items-stretch gap-3">
+          <motion.div 
+            initial={{ opacity: 0, y: 15, filter: 'blur(6px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 0.6, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-6 flex flex-col sm:flex-row items-stretch gap-3"
+          >
             <Link
               href="/contacto"
               className="px-6 py-3.5 bg-lime-600 hover:bg-lime-700 text-white font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2"
@@ -202,7 +282,7 @@ export function Hero() {
             >
               Sobre Nosotros
             </Link>
-          </div>
+          </motion.div>
 
           {/* Puntos clave / Capacidades en mobile */}
           <div className="mt-8 pt-6 border-t border-slate-900 grid grid-cols-2 gap-3.5 text-xs text-slate-300">
@@ -261,31 +341,35 @@ export function Hero() {
         {/* Main Full-Page Hero Content */}
         <div className="relative z-10 w-full px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 flex-1 flex flex-col justify-center py-16 lg:py-20">
           <div className="w-full max-w-5xl 2xl:max-w-6xl">
-            {/* Master Headline with Font Entrance Animation */}
-            <motion.h1
-              initial={{ opacity: 0, y: 35 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl 2xl:text-6xl font-normal tracking-tight text-white leading-[1.12] uppercase drop-shadow-md"
+            <motion.span
+              initial={{ opacity: 0, filter: 'blur(6px)', y: -8 }}
+              animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+              transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+              className="text-xs font-bold uppercase tracking-widest text-lime-400 block mb-3"
             >
-              Tuberías y Estructuras Metálicas
-            </motion.h1>
+              PREMOM SRL • Punta Cana
+            </motion.span>
 
-            {/* Subheading / Value proposition with Font Entrance Animation */}
+            {/* Master Headline with Character-by-Character Blur-In Animation */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl 2xl:text-6xl font-normal tracking-tight text-white leading-[1.12] uppercase drop-shadow-md">
+              <HeroCharacterBlur text="Tuberías y Estructuras Metálicas" delay={0.15} />
+            </h1>
+
+            {/* Subheading / Value proposition with Blur-In Entrance Animation */}
             <motion.p
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ duration: 0.7, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="mt-6 text-base sm:text-xl lg:text-2xl text-slate-200 leading-relaxed w-full max-w-3xl 2xl:max-w-4xl font-normal"
             >
               Fabricación en taller propio, montaje en obra con grúas telescópicas y soldadura certificada para proyectos hoteleros, comerciales e industriales en Punta Cana y toda la República Dominicana.
             </motion.p>
 
-            {/* Call to Actions - Using Browser Routes */}
+            {/* Call to Actions - Using Browser Routes with Blur Entrance */}
             <motion.div
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ duration: 0.65, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
               className="mt-8 flex flex-wrap items-center gap-3.5"
             >
               <Link
