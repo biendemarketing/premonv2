@@ -8,55 +8,52 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 
 async function generateFavicons() {
-  const logoPath = path.join(rootDir, 'public', 'logo-premom-negro.svg');
+  const logoPath = path.join(rootDir, 'public', 'logo-cloudinary.svg');
   const logoSvg = fs.readFileSync(logoPath, 'utf8');
 
-  // Extract the stylized 'M' (cls-1) which is PREMOM's signature structural emblem
-  const match = logoSvg.match(/<path class="cls-1" d="([^"]+)"\/>/);
-  if (!match) {
-    throw new Error('Could not find stylized M path in logo');
+  // Extract all path elements and ensure fills are explicit
+  const rawPaths = logoSvg.match(/<path[^>]+>/g);
+  if (!rawPaths || rawPaths.length === 0) {
+    throw new Error('Could not find paths in logo');
   }
-  const mPath = match[1];
 
-  // Bounding box for M in original SVG: x from 205 to 320, y from 22 to 121
-  // Center is (262.5, 71.5), width 115, height 99
-  // In a 512x512 canvas, scale = 3.0 gives width=345, height=297
-  const scale = 3.0;
-  const cx = 262.5;
-  const cy = 71.5;
-  const targetCx = 256;
-  const targetCy = 256;
-  const tx = (targetCx - cx * scale).toFixed(2);
-  const ty = (targetCy - cy * scale).toFixed(2);
+  // Ensure explicit inline fills for bulletproof SVG rendering
+  const paths = rawPaths.map(p => {
+    if (p.includes('class="cls-1"')) {
+      return p.replace('class="cls-1"', 'fill="#9fb500"');
+    }
+    if (p.includes('class="cls-2"')) {
+      return p.replace('class="cls-2"', 'fill="#060606"');
+    }
+    return p;
+  });
 
-  // 1. Master SVG icon (Scalable vector favicon)
+  // Original logo viewBox is 527 x 127
+  // On a 512x512 square canvas, we center the entire PREMOM logo horizontally and vertically
+  const targetLogoWidth = 472; // leaves balanced margin on left and right
+  const scale = targetLogoWidth / 527; // ~0.8956
+  const targetLogoHeight = 127 * scale; // ~113.75
+  const tx = (512 - targetLogoWidth) / 2; // 20
+  const ty = (512 - targetLogoHeight) / 2; // ~199.12
+
+  // 1. Master SVG icon (Scalable vector favicon with complete logo)
+  // Clean white rounded container so the black letters (#060606) and lime M (#9fb500)
+  // are 100% visible, sharp, and high-contrast in both light and dark browser themes
   const masterSvg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <linearGradient id="premBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0e2319" />
-      <stop offset="50%" stop-color="#091510" />
-      <stop offset="100%" stop-color="#040b08" />
-    </linearGradient>
-    <linearGradient id="premLime" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#bbf451" />
-      <stop offset="100%" stop-color="#9fb500" />
-    </linearGradient>
+    <style>
+      .cls-1 { fill: #9fb500; }
+      .cls-2 { fill: #060606; }
+    </style>
   </defs>
+  <!-- Clean high-contrast white rounded background card -->
+  <rect width="512" height="512" rx="100" fill="#ffffff" />
+  <rect x="4" y="4" width="504" height="504" rx="96" fill="none" stroke="#e2e8f0" stroke-width="4" />
 
-  <!-- Industrial Dark Squircle Base -->
-  <rect x="12" y="12" width="488" height="488" rx="112" fill="url(#premBg)" />
-  <rect x="12" y="12" width="488" height="488" rx="112" fill="none" stroke="#9fb500" stroke-width="5" stroke-opacity="0.4" />
-
-  <!-- Corner Industrial Accent Marks -->
-  <path d="M40,70 L40,40 L70,40" fill="none" stroke="#9fb500" stroke-width="4" stroke-opacity="0.6" stroke-linecap="round" />
-  <path d="M472,70 L472,40 L442,40" fill="none" stroke="#9fb500" stroke-width="4" stroke-opacity="0.6" stroke-linecap="round" />
-  <path d="M40,442 L40,472 L70,472" fill="none" stroke="#9fb500" stroke-width="4" stroke-opacity="0.6" stroke-linecap="round" />
-  <path d="M472,442 L472,472 L442,472" fill="none" stroke="#9fb500" stroke-width="4" stroke-opacity="0.6" stroke-linecap="round" />
-
-  <!-- PREMOM Signature Stylized M Structural Truss -->
-  <g transform="translate(${tx}, ${ty}) scale(${scale})">
-    <path fill="url(#premLime)" d="${mPath}" />
+  <!-- Complete PREMOM logo centered -->
+  <g transform="translate(${tx.toFixed(2)}, ${ty.toFixed(2)}) scale(${scale.toFixed(4)})">
+    ${paths.join('\n    ')}
   </g>
 </svg>`;
 
@@ -119,12 +116,20 @@ async function generateFavicons() {
   fs.writeFileSync(path.join(rootDir, 'app', 'favicon.ico'), icoBuf);
 
   // Clean up any test artifact
-  const testFaviconPath = path.join(rootDir, 'public', 'test-favicon.png');
-  if (fs.existsSync(testFaviconPath)) {
-    fs.unlinkSync(testFaviconPath);
+  const testFiles = [
+    'test-favicon.png',
+    'test-opt1-white.png',
+    'test-opt2-dark.png',
+    'test-opt3-direct.png',
+    'test-full-512.png',
+    'test-full-32.png'
+  ];
+  for (const f of testFiles) {
+    const p = path.join(rootDir, 'public', f);
+    if (fs.existsSync(p)) fs.unlinkSync(p);
   }
 
-  console.log('All favicons and application icons generated successfully!');
+  console.log('All favicons and application icons generated with the COMPLETE PREMOM logo successfully!');
 }
 
 generateFavicons();
