@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-heading: var(--font-heading), var(--font-inter), sans-serif;
+
+  --color-premom-50: #f4faea;
+  --color-premom-100: #e5f5d0;
+  --color-premom-200: #ceeca6;
+  --color-premom-300: #afde74;
+  --color-premom-400: #8ecb43;
+  --color-premom-500: #70b82c;
+  --color-premom-600: #57931f;
+  --color-premom-700: #42701c;
+  --color-premom-800: #37591b;
+  --color-premom-900: #2f4b1a;
+  --color-premom-950: #162a09;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  background-color: #ffffff;
+  color: #1e293b;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+}
+
