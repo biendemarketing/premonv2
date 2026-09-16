@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "convert:webp": "node scripts/convert-to-webp.mjs",
     "generate:og": "node scripts/generate-og-image.mjs",
+    "generate:favicon": "node scripts/generate-favicons.mjs",
     "clean": "next clean"
   },
   "dependencies": {
