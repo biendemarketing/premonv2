@@ -71,22 +71,25 @@ export default function NosotrosPage() {
       <Navbar />
 
       <main className="flex-1 pt-28 lg:pt-32">
-        {/* Page Hero Header */}
-        <section className="bg-slate-950 text-white py-16 lg:py-24 w-full">
-          <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24">
-            <div className="max-w-4xl">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-lime-400 mb-3">
-                <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
-                <span>/</span>
-                <span className="text-white">Nosotros</span>
-              </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal uppercase tracking-tight text-white">
-                Quiénes Somos
-              </h1>
-              <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
-                Especialistas en ingeniería, prefabricación en taller propio y montaje en obra de estructuras metálicas, tuberías industriales y soldadura certificada en Punta Cana – Bávaro y toda la República Dominicana.
-              </p>
+        {/* Page Hero Header - Banner tipo fixed con título centrado y descripción abajo */}
+        <section 
+          className="relative w-full py-24 sm:py-32 lg:py-36 bg-fixed bg-cover bg-center overflow-hidden flex items-center justify-center text-center"
+          style={{ backgroundImage: "url('/projects/project-welding-shop.webp')" }}
+        >
+          <div className="absolute inset-0 bg-slate-950/75" />
+          <div className="relative z-10 w-full px-4 sm:px-8 max-w-4xl mx-auto text-white">
+            <div className="flex items-center justify-center gap-2 text-xs font-medium uppercase tracking-wider text-lime-400 mb-4">
+              <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
+              <span>/</span>
+              <span className="text-white">Nosotros</span>
             </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal uppercase tracking-tight text-white mb-6">
+              Quiénes Somos
+            </h1>
+            <div className="w-16 h-0.5 bg-lime-500 mx-auto mb-6" />
+            <p className="text-base sm:text-lg lg:text-xl text-slate-200 leading-relaxed font-normal max-w-3xl mx-auto">
+              Especialistas en ingeniería, prefabricación en taller propio y montaje en obra de estructuras metálicas, tuberías industriales y soldadura certificada en Punta Cana – Bávaro y toda la República Dominicana.
+            </p>
           </div>
         </section>
 

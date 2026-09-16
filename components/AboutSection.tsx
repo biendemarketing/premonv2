@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion } from 'motion/react';
 import { 
   Target, 
@@ -41,102 +40,83 @@ export function AboutSection() {
   ];
 
   return (
-    <section id="nosotros" className="py-20 lg:py-28 bg-white w-full overflow-hidden">
-      <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24">
+    <section id="nosotros" className="w-full bg-white overflow-hidden">
+      {/* Banner tipo fixed con imagen de fondo, título en el centro y descripción abajo */}
+      <div 
+        className="relative w-full py-28 sm:py-36 lg:py-44 bg-fixed bg-cover bg-center overflow-hidden flex items-center justify-center text-center"
+        style={{ backgroundImage: "url('/projects/project-welding-shop.webp')" }}
+      >
+        {/* Capa de contraste para legibilidad óptima */}
+        <div className="absolute inset-0 bg-slate-950/70" />
         
-        {/* Section Header with Font Entrance Animation */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center max-w-4xl mx-auto mb-16 lg:mb-20"
-        >
+        <div className="relative z-10 w-full px-4 sm:px-8 max-w-4xl mx-auto text-white">
           <motion.span 
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-xs font-bold uppercase tracking-wider text-lime-800"
+            transition={{ duration: 0.5 }}
+            className="text-xs font-medium uppercase tracking-wider text-lime-400 block mb-3"
           >
             Identidad Corporativa • PREMOM SRL
           </motion.span>
+          
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-normal text-slate-900 tracking-tight mt-2"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight uppercase text-white"
           >
             Nosotros
           </motion.h2>
+
+          <div className="w-16 h-0.5 bg-lime-500 mx-auto my-6" />
+
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-4 text-base sm:text-lg text-slate-600 font-normal leading-relaxed"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-base sm:text-lg lg:text-xl text-slate-200 font-normal leading-relaxed max-w-3xl mx-auto"
           >
             Especialistas en ingeniería, fabricación y montaje de estructuras metálicas, sistemas de tuberías industriales y soldadura calificada en Punta Cana y toda la República Dominicana.
           </motion.p>
-        </motion.div>
+        </div>
+      </div>
 
-        {/* Corporate Overview Grid: Image + Description with Framer Motion */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-16 items-center mb-20">
-          <motion.div 
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-6 relative aspect-[16/10] sm:aspect-[4/3] w-full bg-slate-100 overflow-hidden"
-          >
-            <Image
-              src="/projects/project-welding-shop.webp"
-              alt="Taller de prefabricación de acero PREMOM SRL"
-              fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-              referrerPolicy="no-referrer"
-            />
-          </motion.div>
+      <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 py-20 lg:py-24">
+        
+        {/* Descripción Corporativa Detallada */}
+        <div className="max-w-4xl mx-auto text-center mb-20">
+          <h3 className="text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-900 leading-tight mb-6">
+            Ingeniería Metalmecánica de Alto Rendimiento para el Sector Hotelero e Industrial
+          </h3>
+          
+          <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-normal mb-6">
+            En <strong>PREMOM SRL</strong> combinamos experiencia de campo, capacidad instalada en taller propio y tecnología de montaje para materializar proyectos estructurales de cualquier envergadura en la República Dominicana.
+          </p>
 
-          <motion.div 
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-6 space-y-6"
-          >
-            <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight">
-              Ingeniería Metalmecánica de Alto Rendimiento para el Sector Hotelero e Industrial
-            </h3>
-            
-            <p className="text-base text-slate-700 leading-relaxed">
-              En <strong>PREMOM SRL</strong> combinamos experiencia de campo, capacidad instalada en taller propio y tecnología de montaje para materializar proyectos estructurales de cualquier envergadura en la República Dominicana.
-            </p>
+          <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal mb-10">
+            Nuestra ubicación estratégica en la zona de Punta Cana – Bávaro nos permite responder con agilidad a las demandas constructivas de complejos turísticos, cadenas hoteleras, naves logísticas y plantas agroindustriales, garantizando estructuras calculadas para resistir los vientos ciclónicos y la salinidad del entorno caribeño.
+          </p>
 
-            <p className="text-base text-slate-700 leading-relaxed">
-              Nuestra ubicación estratégica en la zona de Punta Cana – Bávaro nos permite responder con agilidad a las demandas constructivas de complejos turísticos, cadenas hoteleras, naves logísticas y plantas agroindustriales, garantizando estructuras calculadas para resistir los vientos ciclónicos y la salinidad del entorno caribeño.
-            </p>
-
-            <div className="grid grid-cols-2 gap-6 pt-2">
-              <div className="py-2">
-                <div className="flex items-center gap-2 text-slate-900 font-bold text-sm sm:text-base">
-                  <Building2 className="w-5 h-5 text-lime-600 shrink-0" />
-                  <span>Taller Propio</span>
-                </div>
-                <p className="text-xs sm:text-sm text-slate-600 mt-1">Corte, armado y soldadura con trazabilidad.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto text-left">
+            <div className="p-5 bg-slate-50 border-l-2 border-lime-600">
+              <div className="flex items-center gap-2 text-slate-900 font-medium text-base">
+                <Building2 className="w-5 h-5 text-lime-700 shrink-0" />
+                <span>Taller Propio</span>
               </div>
-
-              <div className="py-2">
-                <div className="flex items-center gap-2 text-slate-900 font-bold text-sm sm:text-base">
-                  <Wrench className="w-5 h-5 text-lime-600 shrink-0" />
-                  <span>Montaje en Obra</span>
-                </div>
-                <p className="text-xs sm:text-sm text-slate-600 mt-1">Flota de grúas y personal calificado en altura.</p>
-              </div>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1.5 font-normal">Corte, armado y soldadura con trazabilidad certificada.</p>
             </div>
-          </motion.div>
+
+            <div className="p-5 bg-slate-50 border-l-2 border-lime-600">
+              <div className="flex items-center gap-2 text-slate-900 font-medium text-base">
+                <Wrench className="w-5 h-5 text-lime-700 shrink-0" />
+                <span>Montaje en Obra</span>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1.5 font-normal">Flota de grúas e izajes con personal calificado en altura.</p>
+            </div>
+          </div>
         </div>
 
         {/* Misión y Visión - 2 Large Contrast Cards with Entrance Animations */}

@@ -57,9 +57,6 @@ export function Navbar() {
               <Clock className="w-3.5 h-3.5 text-slate-500 shrink-0" />
               <span>Lunes a Sábado: 7:30 AM – 6:00 PM</span>
             </span>
-            <span className="inline-flex items-center px-2.5 py-0.5 bg-lime-100 text-lime-900 font-semibold text-[11px] tracking-wide uppercase">
-              Tuberías, Estructuras & Soldadura
-            </span>
           </div>
 
           <div className="flex items-center space-x-6">

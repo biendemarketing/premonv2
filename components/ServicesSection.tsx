@@ -201,19 +201,19 @@ export function ServicesSection({ onSelectServiceForQuote }: ServicesSectionProp
           ))}
         </div>
 
-        {/* Corporate Call to Action Banner */}
+        {/* Corporate Call to Action Banner - Fondo Verde */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-16 bg-slate-100 p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 w-full"
+          className="mt-16 bg-lime-700 p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 w-full text-white shadow-sm"
         >
           <div className="max-w-3xl text-center md:text-left">
-            <h4 className="text-xl sm:text-2xl font-bold text-slate-900">
+            <h4 className="text-xl sm:text-2xl font-normal text-white leading-tight">
               ¿Dispone de planos técnicos o catálogo de requerimientos?
             </h4>
-            <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+            <p className="text-sm sm:text-base text-lime-50 mt-2 leading-relaxed font-normal">
               Nuestro equipo técnico evalúa planos en DWG o PDF para presentarle un presupuesto detallado por partidas y cronograma de ejecución.
             </p>
           </div>
@@ -221,7 +221,7 @@ export function ServicesSection({ onSelectServiceForQuote }: ServicesSectionProp
           <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={() => handleContactClick('Cotización de Planos Técnicos')}
-              className="px-6 py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider transition-colors"
+              className="px-6 py-3.5 bg-slate-950 hover:bg-slate-900 text-white font-medium text-xs uppercase tracking-wider transition-colors shadow-sm"
               id="cta-service-quote"
             >
               Solicitar Presupuesto
@@ -230,7 +230,7 @@ export function ServicesSection({ onSelectServiceForQuote }: ServicesSectionProp
               href="https://wa.me/18293802005?text=Hola%20PREMOM,%20tengo%20unos%20planos%20para%20presupuestar."
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-3.5 bg-white hover:bg-slate-200 text-slate-800 font-bold text-xs uppercase tracking-wider transition-colors flex items-center gap-2"
+              className="px-5 py-3.5 bg-white hover:bg-slate-100 text-slate-900 font-medium text-xs uppercase tracking-wider transition-colors flex items-center gap-2 shadow-sm"
             >
               <WhatsAppIcon className="w-4 h-4 shrink-0" />
               <span>Consultar</span>

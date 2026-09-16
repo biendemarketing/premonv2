@@ -1,339 +1,491 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, 
   CheckCircle2, 
-  ArrowRight,
-  Maximize2
+  ArrowRight, 
+  ArrowUpRight,
+  ChevronLeft, 
+  ChevronRight
 } from 'lucide-react';
 
 export interface Project {
   id: string;
+  code: string;
   title: string;
+  shortTitle: string;
   category: 'hotelero' | 'industrial' | 'comercial' | 'inoxidable';
   categoryLabel: string;
   location: string;
-  steelWeight: string;
-  date: string;
-  timeline?: string;
   description: string;
+  scope: string;
   highlights: string[];
+  tags: string[];
   imageUrl: string;
 }
 
 export function ProjectsGallery() {
   const [activeFilter, setActiveFilter] = useState<string>('todos');
-  const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [activeProjectModal, setActiveProjectModal] = useState<Project | null>(null);
+  const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
 
   const projects: Project[] = [
     {
       id: 'marquesina-acero-andamios',
-      title: 'Estructura y Marquesina de Acero con Andamiaje de Montaje',
+      code: '01',
+      title: 'Estructura y Marquesina de Acero con Andamiaje',
+      shortTitle: 'Marquesina de Acero y Andamiaje',
       category: 'hotelero',
       categoryLabel: 'Sector Hotelero',
       location: 'Bávaro – Punta Cana, R.D.',
-      steelWeight: '120 Toneladas',
-      date: '2024',
+      scope: 'Fabricación y Montaje Estructural',
       description: 'Fabricación y montaje de pórticos para marquesina de acero estructural con sistema de andamiaje y verificación milimétrica de alineación en obra.',
       highlights: [
         'Montaje de pórticos principales con fijaciones empernadas de alta resistencia',
-        'Control topográfico y plomada estructural durante todo el izaje',
-        'Esquema de protección anticorrosiva para ambiente húmedo',
+        'Control topográfico y plomada estructural durante todo el izaje con grúas',
+        'Esquema de protección anticorrosiva multicapa para ambiente marino',
       ],
+      tags: ['Pórticos de Acero', 'Soldadura AWS D1.1', 'Fijación Empernada'],
       imageUrl: '/slider/projet-1.webp',
     },
     {
       id: 'resort-parque-acuatico',
-      title: 'Estructuras Metálicas para Resort Hotelero y Parque Acuático',
+      code: '02',
+      title: 'Estructuras Metálicas para Resort y Parque Acuático',
+      shortTitle: 'Resort y Parque Acuático',
       category: 'hotelero',
       categoryLabel: 'Sector Hotelero',
       location: 'Punta Cana, R.D.',
-      steelWeight: '85 Toneladas',
-      date: '2024',
-      description: 'Montaje de perfiles y soportes de acero para parque acuático en complejo hotelero frente al mar, empleando plataformas elevadoras y soldaduras con tratamiento marino.',
+      scope: 'Estructuras Especiales Costeras',
+      description: 'Montaje de perfiles y soportes de acero para parque acuático en complejo hotelero frente al mar, empleando plataformas elevadoras y tratamiento anticorrosivo.',
       highlights: [
-        'Estructuras resistentes a la corrosión en primera línea de costa',
-        'Montaje coordinado en altura con plataformas articuladas',
-        'Cálculo estructural para soportar cargas de viento ciclónico',
+        'Estructuras resistentes a la salinidad severa en primera línea de costa',
+        'Montaje coordinado en altura con plataformas articuladas y grúas telescópicas',
+        'Cálculo estructural para soportar cargas de viento ciclónico de hasta 240 km/h',
       ],
+      tags: ['Acabado Marino', 'Montaje en Altura', 'Resistente a Ciclones'],
       imageUrl: '/slider/projet-2.webp',
     },
     {
       id: 'superestructura-multinivel-losa',
+      code: '03',
       title: 'Superestructura Metálica Multinivel con Losa de Concreto',
+      shortTitle: 'Superestructura Multinivel',
       category: 'comercial',
       categoryLabel: 'Sector Comercial',
       location: 'Cap Cana, R.D.',
-      steelWeight: '140 Toneladas',
-      date: '2023',
-      description: 'Pórticos de acero de alta resistencia y vigas principales para edificación multinivel, con losa de entrepiso y arriostramientos estructurales calculados contra sismos y vientos.',
+      scope: 'Edificación Metálica Multinivel',
+      description: 'Pórticos de acero de alta resistencia y vigas principales para edificación multinivel, con losa de entrepiso y arriostramientos calculados contra sismos.',
       highlights: [
         'Vigas maestras de alma llena y vigas secundarias electrosoldadas',
-        'Integración con losa de entrepiso de concreto vaciado',
-        'Inspección de uniones y control de torque en pernos estructurales',
+        'Integración estructural con losa de entrepiso de concreto vaciado',
+        'Inspección no destructiva de uniones y control de torque en pernos estructurales',
       ],
+      tags: ['Vigas de Alma Llena', 'Control de Torque', 'Diseño Sismorresistente'],
       imageUrl: '/slider/projet-3.webp',
     },
     {
       id: 'estructuras-metalicas-costeras',
+      code: '04',
       title: 'Estructuras Metálicas y Cubiertas en Entorno Costero',
+      shortTitle: 'Naves y Cubiertas Costeras',
       category: 'hotelero',
       categoryLabel: 'Sector Hotelero',
       location: 'Verón – Punta Cana, R.D.',
-      steelWeight: '110 Toneladas',
-      date: '2023',
-      description: 'Instalación de naves y cubiertas de acero estructural con recubrimiento anticorrosivo marino negro para área de servicio y logística de complejo resort.',
+      scope: 'Cubiertas de Gran Luz y Naves',
+      description: 'Instalación de naves y cubiertas de acero estructural con recubrimiento anticorrosivo marino negro para área de servicio y logística de resort.',
       highlights: [
-        'Pórticos rígidos de gran luz para almacenamiento y mantenimiento',
-        'Acabado negro mate de alta resistencia a los rayos UV y salitre',
-        'Maniobras de montaje respetando el entorno natural y palmeras',
+        'Pórticos rígidos de gran luz libre para almacenamiento y mantenimiento técnico',
+        'Pintura electrostática y epóxica de alta resistencia a rayos UV y salitre',
+        'Maniobras de montaje seguras preservando el entorno paisajístico del resort',
       ],
+      tags: ['Pórticos Rígidos', 'Recubrimiento Epóxico', 'Gran Luz Libre'],
       imageUrl: '/slider/projet-4.webp',
     },
     {
       id: 'montaje-grua-frente-mar',
-      title: 'Montaje con Grúa Telescópica de Estructura de Acero Frente al Mar',
+      code: '05',
+      title: 'Montaje con Grúa Telescópica Frente al Mar',
+      shortTitle: 'Montaje con Grúa Telescópica',
       category: 'hotelero',
       categoryLabel: 'Sector Hotelero',
       location: 'Bávaro, R.D.',
-      steelWeight: '160 Toneladas',
-      date: '2024',
-      description: 'Maniobras de izaje y acople de elementos estructurales de gran luz mediante grúa telescópica de alto tonelaje para complejo hotelero en primera línea de costa.',
+      scope: 'Izaje Pesado e Ingeniería de Montaje',
+      description: 'Maniobras de izaje y acople de elementos estructurales de gran envergadura mediante grúa telescópica de alto tonelaje para complejo hotelero.',
       highlights: [
-        'Plan de izaje certificado con grúa de alta capacidad',
-        'Ensamble de vigas principales en altura con soldadura homologada',
-        'Cumplimiento riguroso de protocolos de seguridad en obra',
+        'Plan de izaje certificado con grúa telescópica de 90 toneladas',
+        'Ensamble de vigas principales en altura con soldadores homologados 6G',
+        'Cumplimiento estricto de normativas internacionales OSHA y AWS',
       ],
+      tags: ['Izaje con Grúa', 'Soldadura 6G', 'Seguridad Certificada'],
       imageUrl: '/slider/projet-5.webp',
     },
     {
       id: 'estructura-piramidal-cenador',
-      title: 'Estructura Metálica Piramidal y Cenador para Complejo Turístico',
+      code: '06',
+      title: 'Estructura Metálica Piramidal para Cenador',
+      shortTitle: 'Estructura Piramidal de Acero',
       category: 'hotelero',
       categoryLabel: 'Sector Hotelero',
       location: 'Cap Cana, R.D.',
-      steelWeight: '50 Toneladas',
-      date: '2023',
-      description: 'Fabricación y ensamblaje de gran estructura metálica piramidal de acero sobre áreas circulares revestidas de piedra en desarrollo turístico.',
+      scope: 'Estructuras Arquitectónicas',
+      description: 'Fabricación y ensamblaje de estructura metálica piramidal de acero sobre bases revestidas de piedra en desarrollo turístico de alto perfil.',
       highlights: [
-        'Geometría piramidal de precisión milimétrica prearmada en taller',
-        'Tratamiento anticorrosivo marino y anclajes estructurales de alta fijación',
-        'Diseño arquitectónico icónico integrado al paisaje del resort',
+        'Geometría piramidal de precisión milimétrica prearmada en taller propio',
+        'Tratamiento anticorrosivo marino y anclajes estructurales epóxicos',
+        'Diseño arquitectónico icónico perfectamente integrado al paisaje',
       ],
+      tags: ['Geometría Compleja', 'Prefabricación en Taller', 'Anclaje Epóxico'],
       imageUrl: '/slider/projet-6.webp',
     },
     {
-      id: 'izaje-vigas-grua-torre',
-      title: 'Montaje e Izaje de Vigas Estructurales de Acero Frente al Mar',
-      category: 'industrial',
-      categoryLabel: 'Sector Industrial',
-      location: 'Punta Cana, R.D.',
-      steelWeight: '180 Toneladas',
-      date: '2023',
-      description: 'Construcción integral de esqueleto metálico con izaje de vigas maestras mediante grúa torre para edificación frente al mar.',
-      highlights: [
-        'Pórticos de perfiles estructurales de alma llena',
-        'Anclajes estructurales de alta resistencia ensayados a tracción',
-        'Acero certificado bajo normas ASTM A572 Grado 50',
-      ],
-      imageUrl: '/projects/project-steel-frame.webp',
-    },
-    {
       id: 'red-piping-chillers',
-      title: 'Red de Tuberías Industriales y Piping para Batería de Chillers',
+      code: '07',
+      title: 'Red de Tuberías Industriales y Piping para Chillers',
+      shortTitle: 'Piping para Batería de Chillers',
       category: 'industrial',
       categoryLabel: 'Sector Industrial',
       location: 'Bávaro, R.D.',
-      steelWeight: '2,400 Metros',
-      date: '2024',
+      scope: 'Tuberías Industriales y Salas de Máquinas',
       description: 'Interconexión hidráulica y colectores de distribución de agua helada para acondicionamiento ambiental en cuartos de máquinas y salas de chillers.',
       highlights: [
-        'Tubería de acero al carbono ASTM A106 con bridas ANSI forjadas',
-        'Soldadura TIG y SMAW inspeccionada y purgada',
-        'Prueba hidrostática certificada a 1.5 veces la presión de diseño',
+        'Tubería de acero al carbono ASTM A106 con bridas ANSI forjadas clase 150/300',
+        'Soldadura TIG y SMAW con inspección por líquidos penetrantes y radiografía',
+        'Prueba hidrostática certificada a 1.5 veces la presión nominal de trabajo',
       ],
+      tags: ['ASTM A106 / A53', 'Soldadura TIG Purga', 'Prueba Hidrostática'],
       imageUrl: '/projects/project-piping-chiller.webp',
     },
     {
       id: 'prefabricacion-taller-soldadura',
-      title: 'Prefabricación y Soldadura Homologada en Taller Propio',
+      code: '08',
+      title: 'Prefabricación y Soldadura Calificada en Taller Propio',
+      shortTitle: 'Taller Propio de Prefabricación',
       category: 'industrial',
       categoryLabel: 'Servicios de Taller',
       location: 'Punta Cana, R.D.',
-      steelWeight: 'Producción Permanente',
-      date: '2024',
-      description: 'Corte por plasma, oxicorte, conformado y soldadura especializada bajo normas AWS D1.1 y ASME en banco de trabajo controlado.',
+      scope: 'Fabricación y Metalmecánica',
+      description: 'Corte por plasma, oxicorte, conformado y soldadura especializada bajo normas AWS D1.1 y ASME en banco de trabajo con control de calidad.',
       highlights: [
-        'Soldadores calificados en posiciones 1G a 6G',
-        'Control dimensional milimétrico con plantillas láser',
-        'Área dedicada de granallado y pintado anticorrosivo',
+        'Equipo de soldadores calificados bajo estándares internacionales AWS y ASME',
+        'Control dimensional milimétrico en mesa de trazado y oxicorte computarizado',
+        'Área propia de granallado y aplicación de recubrimientos anticorrosivos',
       ],
+      tags: ['Taller Industrial', 'Normas AWS / ASME', 'Control Dimensional'],
       imageUrl: '/projects/project-welding-shop.webp',
     },
   ];
-
-  const filteredProjects = activeFilter === 'todos' 
-    ? projects 
-    : projects.filter(p => p.category === activeFilter);
 
   const filters = [
     { id: 'todos', label: 'Todas las Obras' },
     { id: 'hotelero', label: 'Sector Hotelero' },
     { id: 'industrial', label: 'Sector Industrial' },
     { id: 'comercial', label: 'Comercial' },
-    { id: 'inoxidable', label: 'Acero Inoxidable' },
   ];
 
+  const filteredProjects = activeFilter === 'todos' 
+    ? projects 
+    : projects.filter(p => p.category === activeFilter);
+
+  const [selectedId, setSelectedId] = useState<string>(projects[0].id);
+
+  // Fallback if filter changes and selectedId is not in filtered list
+  const currentSelectedProject = filteredProjects.find(p => p.id === selectedId) || filteredProjects[0] || projects[0];
+
+  const currentIndex = filteredProjects.findIndex(p => p.id === currentSelectedProject.id);
+
+  const handlePrev = () => {
+    const nextIdx = (currentIndex - 1 + filteredProjects.length) % filteredProjects.length;
+    setSelectedId(filteredProjects[nextIdx].id);
+  };
+
+  const handleNext = () => {
+    const nextIdx = (currentIndex + 1) % filteredProjects.length;
+    setSelectedId(filteredProjects[nextIdx].id);
+  };
+
+  // Automatic slider interval with pause on hover/interaction or modal
+  useEffect(() => {
+    if (!isAutoPlaying || activeProjectModal) return;
+
+    const interval = setInterval(() => {
+      setSelectedId((prevId) => {
+        const idx = filteredProjects.findIndex(p => p.id === prevId);
+        const next = (idx + 1) % filteredProjects.length;
+        return filteredProjects[next].id;
+      });
+    }, 4500);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, activeProjectModal, filteredProjects]);
+
   return (
-    <section id="proyectos" className="py-24 lg:py-32 bg-[#0b1b15] text-white w-full overflow-hidden">
+    <section id="proyectos" className="py-20 lg:py-28 bg-[#091510] text-white w-full overflow-hidden">
       <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24">
         
-        {/* Section Header with Font Entrance Animation */}
+        {/* Section Header */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col md:flex-row md:items-end justify-between mb-12 lg:mb-16 gap-6"
+          className="flex flex-col md:flex-row md:items-end justify-between mb-10 lg:mb-14 gap-6"
         >
           <div className="max-w-3xl">
-            <motion.span 
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-xs font-bold uppercase tracking-wider text-lime-400"
-            >
-              Registro de Obras • PREMOM
-            </motion.span>
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-normal text-white tracking-tight mt-2"
-            >
+            <span className="text-xs font-medium uppercase tracking-wider text-lime-400 block mb-2">
+              Registro de Obras • PREMOM SRL
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-white tracking-tight uppercase">
               Proyectos Ejecutados
-            </motion.h2>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-4 text-base sm:text-lg text-slate-300 font-normal leading-relaxed"
-            >
-              Obras de estructuras pesadas, sistemas de tuberías industriales y soldadura certificada realizadas en Punta Cana, Bávaro y toda la República Dominicana.
-            </motion.p>
+            </h2>
+            <p className="mt-3 text-base sm:text-lg text-slate-300 font-normal leading-relaxed">
+              Estructuras pesadas, sistemas de tuberías industriales y soldadura certificada en Punta Cana, Bávaro y toda la República Dominicana.
+            </p>
           </div>
 
-          {/* Dedicated Page Link */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
+          {/* Navigation Controls & Direct Link (Sin trazos) */}
+          <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center gap-1.5 bg-slate-900/90 p-1">
+              <button
+                onClick={handlePrev}
+                className="p-2.5 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
+                aria-label="Proyecto anterior"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={handleNext}
+                className="p-2.5 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
+                aria-label="Proyecto siguiente"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+
             <Link
-              href="/proyectos"
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-lime-600 hover:bg-lime-700 text-white font-bold text-xs uppercase tracking-wider transition-colors shrink-0"
+              href="/contacto"
+              className="inline-flex items-center gap-2 px-5 py-3 bg-lime-600 hover:bg-lime-700 text-white font-medium text-xs uppercase tracking-wider transition-colors"
             >
-              <span>Ver Catálogo Completo</span>
+              <span>Presupuestar Obra</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
-          </motion.div>
+          </div>
         </motion.div>
 
-        {/* Filter Buttons with Motion */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap items-center gap-2 mb-12"
-        >
+        {/* Filter Tabs (Sin trazos) */}
+        <div className="flex flex-wrap items-center gap-2 mb-8">
           {filters.map((f) => (
             <button
               key={f.id}
-              onClick={() => setActiveFilter(f.id)}
-              className={`px-5 py-2.5 text-xs font-bold uppercase tracking-wider transition-colors ${
+              onClick={() => {
+                setActiveFilter(f.id);
+                const firstMatch = f.id === 'todos' ? projects[0] : projects.find(p => p.category === f.id);
+                if (firstMatch) setSelectedId(firstMatch.id);
+              }}
+              className={`px-4 py-2 text-xs uppercase tracking-wider transition-colors ${
                 activeFilter === f.id
-                  ? 'bg-lime-500 text-slate-950'
-                  : 'bg-slate-900/80 text-slate-300 hover:text-white hover:bg-slate-800'
+                  ? 'bg-lime-500 text-slate-950 font-medium'
+                  : 'bg-slate-900/90 text-slate-300 hover:text-white hover:bg-slate-800 font-normal'
               }`}
             >
               {f.label}
             </button>
           ))}
-        </motion.div>
+        </div>
 
-        {/* 3-Column Cards Grid Expanding Across Full Width */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 xl:gap-12 w-full">
-          {filteredProjects.slice(0, 6).map((project, idx) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.6, delay: (idx % 3) * 0.12, ease: [0.22, 1, 0.36, 1] }}
-              onClick={() => setActiveProject(project)}
-              className="flex flex-col group cursor-pointer"
-            >
-              {/* Image Container with Sharp Corners */}
-              <div className="relative aspect-[4/3] sm:aspect-[16/11] w-full overflow-hidden bg-slate-900">
+        {/* ========================================================================= */}
+        {/* DESKTOP ACCORDION LAYOUT: Sin trazos en cards, sin bordes en botones,      */}
+        {/* sin tonelada, rotación automática tipo slider                              */}
+        {/* ========================================================================= */}
+        <div 
+          onMouseEnter={() => setIsAutoPlaying(false)}
+          onMouseLeave={() => setIsAutoPlaying(true)}
+          className="hidden lg:flex flex-row gap-2.5 w-full min-h-[580px] xl:min-h-[620px] items-stretch"
+        >
+          
+          {/* Loop over filtered projects */}
+          {filteredProjects.map((project) => {
+            const isActive = project.id === currentSelectedProject.id;
+
+            if (isActive) {
+              return (
+                <motion.div
+                  key={project.id}
+                  layout
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  onClick={() => setActiveProjectModal(project)}
+                  className="flex-[8] relative overflow-hidden bg-slate-950 flex flex-col justify-between p-7 sm:p-9 xl:p-10 shadow-lg cursor-pointer group"
+                >
+                  {/* Real Project Image Background */}
+                  <Image
+                    src={project.imageUrl}
+                    alt={project.title}
+                    fill
+                    priority
+                    sizes="(max-width: 1536px) 75vw, 1200px"
+                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
+                  
+                  {/* Degradado overlay solo en la parte inferior */}
+                  <div className="absolute inset-x-0 bottom-0 h-3/5 sm:h-1/2 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent pointer-events-none" />
+
+                  {/* Flecha grande en la esquina superior derecha para ir al proyecto */}
+                  <div className="relative z-10 flex justify-end">
+                    <div 
+                      className="p-3 sm:p-3.5 bg-slate-950/60 hover:bg-lime-500 text-white hover:text-slate-950 transition-all shadow-md group-hover:bg-lime-500 group-hover:text-slate-950"
+                      title="Ver proyecto"
+                      aria-label="Ver proyecto"
+                    >
+                      <ArrowUpRight className="w-8 h-8 sm:w-10 sm:h-10 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </div>
+                  </div>
+
+                  {/* Información: solo el título en la parte inferior sobre el degradado */}
+                  <div className="relative z-10 mt-auto pt-16">
+                    <h3 className="text-2xl sm:text-3xl xl:text-4xl font-normal text-white uppercase tracking-tight leading-tight drop-shadow-md">
+                      {project.title}
+                    </h3>
+                  </div>
+                </motion.div>
+              );
+            }
+
+            // Collapsed Vertical Cards (Strips) (Sin trazos)
+            return (
+              <motion.div
+                key={project.id}
+                layout
+                onClick={() => setSelectedId(project.id)}
+                className="w-14 xl:w-16 shrink-0 relative overflow-hidden cursor-pointer bg-slate-900/90 hover:bg-slate-800 transition-colors flex flex-col justify-between items-center py-6 group"
+              >
+                {/* Subtle Image Background in Collapsed State */}
                 <Image
                   src={project.imageUrl}
                   alt={project.title}
                   fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="100px"
+                  className="object-cover opacity-20 group-hover:opacity-35 transition-opacity"
                   referrerPolicy="no-referrer"
                 />
-                
-                {/* Subtle Hover Overlay */}
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/25 transition-colors" />
+                <div className="absolute inset-0 bg-slate-950/70 group-hover:bg-slate-950/50 transition-colors" />
 
-                {/* Category Badge on Corner */}
-                <div className="absolute top-3 left-3 px-2.5 py-1 bg-slate-950/80 text-lime-400 text-[10px] font-medium uppercase tracking-wider">
-                  <span>{project.categoryLabel}</span>
+                {/* Top Code Badge (Sin trazo) */}
+                <div className="relative z-10 w-9 h-9 bg-slate-800 text-slate-200 group-hover:text-lime-400 group-hover:bg-slate-700 flex items-center justify-center text-xs font-medium transition-colors">
+                  {project.code}
                 </div>
-              </div>
 
-              {/* Text Container Below Image: Clean Title + Descriptive Text */}
-              <div className="pt-6 flex flex-col justify-between flex-1">
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-normal text-white group-hover:text-lime-400 transition-colors leading-snug">
-                    {project.title}
-                  </h3>
-
-                  <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
-                    {project.description}
-                  </p>
+                {/* Vertical Project Title (Rotating 90 degrees) */}
+                <div className="relative z-10 my-auto py-6 flex items-center justify-center">
+                  <span 
+                    className="text-xs uppercase tracking-widest text-slate-300 group-hover:text-white font-normal whitespace-nowrap transition-colors"
+                    style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+                  >
+                    {project.shortTitle}
+                  </span>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+
+                {/* Bottom Category Code */}
+                <div className="relative z-10 text-[9px] uppercase tracking-wider text-lime-400 font-medium px-1">
+                  {project.category.slice(0, 3)}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
-        {/* View All Projects Action Link */}
-        <div className="mt-16 text-center">
-          <Link
-            href="/proyectos"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider transition-colors"
+        {/* ========================================================================= */}
+        {/* MOBILE & TABLET VIEW: Featured Active Card + Horizontal Selector Strips   */}
+        {/* (Sin trazos y con slider automático)                                      */}
+        {/* ========================================================================= */}
+        <div 
+          onMouseEnter={() => setIsAutoPlaying(false)}
+          onMouseLeave={() => setIsAutoPlaying(true)}
+          className="lg:hidden flex flex-col gap-5 w-full"
+        >
+          {/* Active Featured Card: degradado solo abajo, solo título abajo, flecha grande arriba a la derecha, card completa clicable */}
+          <div 
+            onClick={() => setActiveProjectModal(currentSelectedProject)}
+            className="relative overflow-hidden bg-slate-950 flex flex-col justify-between p-6 sm:p-8 min-h-[460px] cursor-pointer group shadow-lg"
           >
-            <span>Explorar Todos los Proyectos de PREMOM</span>
+            <Image
+              src={currentSelectedProject.imageUrl}
+              alt={currentSelectedProject.title}
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 800px"
+              className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+              referrerPolicy="no-referrer"
+            />
+            
+            {/* Degradado overlay solo en la parte inferior */}
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent pointer-events-none" />
+
+            {/* Flecha grande en la esquina superior derecha para ir al proyecto */}
+            <div className="relative z-10 flex justify-end">
+              <div 
+                className="p-2.5 bg-slate-950/60 hover:bg-lime-500 text-white hover:text-slate-950 transition-all shadow-md group-hover:bg-lime-500 group-hover:text-slate-950"
+                title="Ver proyecto"
+                aria-label="Ver proyecto"
+              >
+                <ArrowUpRight className="w-8 h-8 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+              </div>
+            </div>
+
+            {/* Información: solo el título en la parte inferior sobre el degradado */}
+            <div className="relative z-10 mt-auto pt-16">
+              <h3 className="text-xl sm:text-2xl font-normal text-white uppercase tracking-tight leading-tight drop-shadow-md">
+                {currentSelectedProject.title}
+              </h3>
+            </div>
+          </div>
+
+          {/* Horizontal Selector of Other Projects (Sin trazo) */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
+            {filteredProjects.map((p) => {
+              const isSelected = p.id === currentSelectedProject.id;
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => setSelectedId(p.id)}
+                  className={`flex items-center gap-2.5 px-4 py-3 shrink-0 text-left transition-colors ${
+                    isSelected
+                      ? 'bg-lime-600 text-white'
+                      : 'bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800'
+                  }`}
+                >
+                  <span className="w-6 h-6 flex items-center justify-center bg-black/40 text-xs font-medium">
+                    {p.code}
+                  </span>
+                  <span className="text-xs uppercase tracking-wider font-normal whitespace-nowrap">
+                    {p.shortTitle}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Global Footer CTA (Sin trazos) */}
+        <div className="mt-14 text-center">
+          <Link
+            href="/contacto"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white font-medium text-xs uppercase tracking-wider transition-colors shadow-sm"
+          >
+            <span>Cotizar Proyecto con Especificaciones Similares</span>
             <ArrowRight className="w-4 h-4 text-lime-400" />
           </Link>
         </div>
 
       </div>
 
-      {/* Project Detail Modal */}
+      {/* Project Detail Modal (Sin tonelada ni trazos innecesarios) */}
       <AnimatePresence>
-        {activeProject && (
+        {activeProjectModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-xs">
             <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
@@ -343,7 +495,7 @@ export function ProjectsGallery() {
               className="bg-white text-slate-900 max-w-3xl w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto"
             >
               <button
-                onClick={() => setActiveProject(null)}
+                onClick={() => setActiveProjectModal(null)}
                 className="absolute top-4 right-4 p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
                 aria-label="Cerrar modal"
               >
@@ -352,8 +504,8 @@ export function ProjectsGallery() {
 
               <div className="relative aspect-[16/9] w-full mb-6 bg-slate-100 overflow-hidden">
                 <Image
-                  src={activeProject.imageUrl}
-                  alt={activeProject.title}
+                  src={activeProjectModal.imageUrl}
+                  alt={activeProjectModal.title}
                   fill
                   sizes="(max-width: 1024px) 100vw, 768px"
                   className="object-cover"
@@ -364,22 +516,22 @@ export function ProjectsGallery() {
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="px-2.5 py-1 bg-lime-100 text-lime-900 text-xs font-medium uppercase tracking-wider">
-                    {activeProject.categoryLabel}
+                    {activeProjectModal.categoryLabel}
                   </span>
                 </div>
 
                 <h3 className="text-2xl font-normal text-slate-900 leading-tight">
-                  {activeProject.title}
+                  {activeProjectModal.title}
                 </h3>
 
                 <div className="p-4 bg-slate-100 text-xs flex items-center justify-between">
                   <div>
                     <span className="text-slate-500 block mb-0.5 font-normal">Categoría del Proyecto</span>
-                    <span className="font-medium text-slate-900">{activeProject.categoryLabel}</span>
+                    <span className="font-medium text-slate-900">{activeProjectModal.categoryLabel}</span>
                   </div>
                   <div>
                     <span className="text-slate-500 block mb-0.5 font-normal">Ubicación</span>
-                    <span className="font-normal text-slate-900 text-sm text-lime-800">{activeProject.location}</span>
+                    <span className="font-normal text-slate-900 text-sm text-lime-800">{activeProjectModal.location}</span>
                   </div>
                 </div>
 
@@ -388,16 +540,16 @@ export function ProjectsGallery() {
                     Descripción del Proyecto
                   </h4>
                   <p className="text-sm text-slate-700 leading-relaxed font-normal">
-                    {activeProject.description}
+                    {activeProjectModal.description}
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                  <h4 className="text-xs font-medium uppercase tracking-wider text-slate-700 mb-2">
                     Aspectos Destacados de Ingeniería
                   </h4>
                   <div className="space-y-1.5">
-                    {activeProject.highlights.map((h, i) => (
+                    {activeProjectModal.highlights.map((h, i) => (
                       <div key={i} className="flex items-center gap-2 text-xs text-slate-700">
                         <CheckCircle2 className="w-4 h-4 text-lime-700 shrink-0" />
                         <span>{h}</span>
@@ -407,20 +559,20 @@ export function ProjectsGallery() {
                 </div>
 
                 <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-                  <span className="text-xs text-slate-500 font-medium">
+                  <span className="text-xs text-slate-500 font-normal">
                     ¿Desea cotizar un proyecto con especificaciones similares?
                   </span>
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => setActiveProject(null)}
-                      className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900"
+                      onClick={() => setActiveProjectModal(null)}
+                      className="px-4 py-2 text-xs font-medium text-slate-600 hover:text-slate-900"
                     >
                       Cerrar
                     </button>
                     <Link
                       href="/contacto"
-                      onClick={() => setActiveProject(null)}
-                      className="px-5 py-2.5 bg-lime-600 hover:bg-lime-700 text-white font-bold text-xs uppercase tracking-wider transition-colors"
+                      onClick={() => setActiveProjectModal(null)}
+                      className="px-5 py-2.5 bg-lime-600 hover:bg-lime-700 text-white font-medium text-xs uppercase tracking-wider transition-colors"
                     >
                       Solicitar Presupuesto
                     </Link>
@@ -434,3 +586,5 @@ export function ProjectsGallery() {
     </section>
   );
 }
+
+
