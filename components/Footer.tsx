@@ -8,16 +8,11 @@ import {
   MapPin, 
   Mail, 
   Clock, 
-  ArrowUp, 
   ShieldCheck,
   Phone
 } from 'lucide-react';
 
 export function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const navLinks = [
     { name: 'Inicio', href: '/' },
     { name: 'Nosotros (Misión, Visión, Valores)', href: '/nosotros' },
@@ -166,15 +161,6 @@ export function Footer() {
           <p>
             &copy; {new Date().getFullYear()} PREMOM SRL. Todos los derechos reservados. Punta Cana – Bávaro, República Dominicana.
           </p>
-
-          <button
-            onClick={scrollToTop}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
-            aria-label="Volver arriba"
-          >
-            <ArrowUp className="w-3.5 h-3.5" />
-            <span>Volver arriba</span>
-          </button>
         </div>
       </div>
     </footer>
