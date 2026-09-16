@@ -8,40 +8,7 @@ export function FloatingWhatsApp() {
   const [isOpen, setIsOpen] = useState(false);
 
   const scrollToTop = () => {
-    // If Lenis smooth scroll engine is available, use it with custom ease-in-out easing
-    if (typeof window !== 'undefined' && (window as unknown as { __lenis?: { scrollTo: (target: number, opts: unknown) => void } }).__lenis) {
-      (window as unknown as { __lenis: { scrollTo: (target: number, opts: unknown) => void } }).__lenis.scrollTo(0, {
-        duration: 1.4,
-        easing: (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
-      });
-      return;
-    }
-
-    // High-performance requestAnimationFrame fallback with progressive ease-in-out acceleration & gentle deceleration
-    if (typeof window === 'undefined') return;
-    const startY = window.pageYOffset || document.documentElement.scrollTop;
-    if (startY <= 0) return;
-
-    const startTime = performance.now();
-    // Dynamic duration based on travel distance: 750ms min up to 1400ms max
-    const duration = Math.min(Math.max(startY * 0.35, 750), 1400);
-
-    const easeInOutCubic = (t: number) =>
-      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-    function step(currentTime: number) {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const ease = easeInOutCubic(progress);
-
-      window.scrollTo(0, startY * (1 - ease));
-
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      }
-    }
-
-    requestAnimationFrame(step);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
